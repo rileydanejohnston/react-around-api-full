@@ -4,6 +4,7 @@ const {
   getUsers,
   getUser,
   createUser,
+  login,
   updateProfile,
   updateAvatar,
 } = require('../controllers/users');
@@ -12,7 +13,8 @@ router.get('/users', getUsers);
 router.get('/users/:userId', getUser);
 router.patch('/users/me', updateProfile);
 router.patch('/users/me/avatar', updateAvatar);
-router.post('/users', celebrate({
+router.post('/signin', login);
+router.post('/signup', celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30),
     about: Joi.string().min(2).max(30),

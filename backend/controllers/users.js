@@ -1,5 +1,6 @@
 const Users = require('../models/user');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 module.exports.updateAvatar = (req, res) => {
   const { avatar } = req.body;
@@ -54,12 +55,30 @@ module.exports.getUser = (req, res) => {
     .then((user) => res.status(200).send({ data: user }))
     .catch((err) => {
       if (err.name === 'DocumentNotFoundError') {
-        res.status(404).send({ message: 'The card was not found.' });
+        res.status(404).send({ message: 'The user was not found.' });
       } else if (err.name === 'CastError') {
-        res.status(400).send({ message: 'Invalid card ID' });
+        res.status(400).send({ message: 'Invalid user ID' });
       }
       res.status(500).send({ message: err });
     });
+};
+
+module.exports.login = (req, res) => {
+  const { email, password } = req.body;
+
+  return Users.findUserByCredentials(email, password)
+    .then((user) => {
+
+      const token = jwt.sign(
+        { _id: user._id },
+        'secret-key',
+        { expiresIn: '7d' });
+
+      res.send({ token });
+    })
+    .catch((err) => {
+      res.status(401).send({ message: err.message });
+    })
 };
 
 module.exports.createUser = (req, res) => {
