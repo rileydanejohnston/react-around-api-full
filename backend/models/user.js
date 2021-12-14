@@ -6,13 +6,13 @@ const userSchema = new mongoose.Schema({
     type: String,
     minlength: 2,
     maxlength: 30,
-    required: true,
+    default: 'Jacques Cousteau',
   },
   about: {
     type: String,
     minlength: 2,
     maxlength: 30,
-    required: true,
+    default: 'Explorer',
   },
   avatar: {
     type: String,
@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
       validator: (v) => /\w{4,5}\S{3,}/.test(v),
       message: 'Error! The link you entered is invalid.',
     },
-    required: true,
+    default: 'https://pictures.s3.yandex.net/resources/avatar_1604080799.jpg',
   },
   email: {
     type: String,
