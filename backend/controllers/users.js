@@ -1,4 +1,5 @@
 const Users = require('../models/user');
+const bcrypt = require('bcryptjs');
 
 module.exports.updateAvatar = (req, res) => {
   const { avatar } = req.body;
@@ -62,10 +63,24 @@ module.exports.getUser = (req, res) => {
 };
 
 module.exports.createUser = (req, res) => {
-  const { name, about, avatar } = req.body;
+  const { name, about, avatar, email, password } = req.body;
 
-  Users.create({ name, about, avatar })
-    .then((user) => res.status(201).send({ data: user }))
+  bcrypt.hash(password, 10)
+    .then((hash) => Users.create({
+      name,
+      about,
+      avatar,
+      email,
+      password: hash,
+    }))
+    // return everything except hashed password
+    .then((user) => res.status(201).send({
+      _id: user._id,
+      name: user.name,
+      about: user.about,
+      avatar: user.avatar,
+      email: user.email
+    }))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         res.status(400).send({ message: 'Invalid information was submitted.' });
