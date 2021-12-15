@@ -1,0 +1,14 @@
+.header__nav {
+  display: flex;
+}
+@media screen and (max-width: 625px){
+  .header__nav {
+    flex-direction: column;
+    transition: opacity .5s ease, max-height .5s ease;
+    align-items: center;
+    visibility: hidden;
+    opacity: 0;
+    max-height: 0px;
+    order: 0;
+  }
+}

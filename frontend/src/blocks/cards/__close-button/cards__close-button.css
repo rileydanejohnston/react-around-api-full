@@ -1,0 +1,14 @@
+.cards__close-button {
+  background: center url('../../../images/trashcan.svg');
+  border: none;
+  width: 18px;
+  height: 19.3px;
+  position: absolute;
+  top: 18px;
+  right: 15px;
+}
+.cards__close-button:hover {
+  opacity: .5;
+  transition: opacity .3s linear;
+  cursor: pointer;
+}

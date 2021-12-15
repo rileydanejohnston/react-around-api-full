@@ -1,0 +1,24 @@
+.popup__close {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: none;
+  position: absolute;
+  top: -48.2px;
+  right: -48.2px;
+  transform: rotate(45deg);
+  background: rgba(0,0,0,0.0) center / contain no-repeat url('../../../images/addition-symbol.svg');
+}
+.popup__close:hover {
+  opacity: .6;
+  transition: opacity .3s linear;
+  cursor: pointer;
+}
+@media screen and (max-width: 625px){
+  .popup__close {
+    width: 26px;
+    height: 26px;
+    top: -39.62px;
+    right: 0;
+  }
+}

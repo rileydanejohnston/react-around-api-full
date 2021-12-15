@@ -1,0 +1,10 @@
+.cards__name {
+  margin: 0 0 0 21px;
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 1.21;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: calc(100% - 24px); /* like image keeps getting cut off if the name overflows */
+}

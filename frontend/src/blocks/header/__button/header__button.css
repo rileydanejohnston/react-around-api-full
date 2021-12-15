@@ -1,0 +1,15 @@
+.header__button {
+  border: none;
+  display: none;
+  margin-right: 30px;
+}
+.header__button:hover {
+  cursor: pointer;
+  opacity: .6;
+  transition: opacity .3s ease;
+}
+@media screen and (max-width: 625px){
+  .header__button {
+    display: block;
+  }
+}

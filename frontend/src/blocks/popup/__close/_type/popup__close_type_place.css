@@ -1,0 +1,11 @@
+.popup__close_type_place {
+  top: -47px;
+  right: -45.56px;
+}
+
+@media screen and (max-width: 625px){
+  .popup__close_type_place {
+    top: -39.23px;
+    right: 0;
+  }
+}

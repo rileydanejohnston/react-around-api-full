@@ -1,0 +1,9 @@
+.header__text_email {
+  font-weight: 500;
+  margin: 0 24px 0 0;
+}
+@media screen and (max-width: 625px){
+  .header__text_email {
+    margin: 28px 0 18px 0;
+  }
+}
