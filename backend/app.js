@@ -1,12 +1,15 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
-const { celebrate, Joi } = require('celebrate');
 const userRouter = require('./routes/users');
 const cardRouter = require('./routes/cards');
 const { createUser, login } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const ErrorManager = require('./errors/error-manager');
+const {
+  signupValid,
+  loginValid,
+} = require('./middlewares/users-validate');
 
 
 const { PORT = 3000 } = process.env;
@@ -21,16 +24,8 @@ app.use(helmet());
 // parse the body of all post reqeusts
 app.use(express.json());
 
-app.post('/signin', login);
-app.post('/signup', celebrate({
-  body: Joi.object().keys({
-    name: Joi.string().min(2).max(30),
-    about: Joi.string().min(2).max(30),
-    avatar: Joi.string().min(2).max(30),
-    email: Joi.string().required(),
-    password: Joi.string().min(8).required(),
-  })
-}),createUser);
+app.post('/signin', loginValid, login);
+app.post('/signup', signupValid, createUser);
 
 app.use(auth);
 
