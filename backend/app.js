@@ -10,6 +10,11 @@ const {
   signupValid,
   loginValid,
 } = require('./middlewares/users-validate');
+const {
+  requestLogger,
+  errorLogger,
+} = require('./middlewares/logger');
+const { errors } = require('celebrate');
 
 
 const { PORT = 3000 } = process.env;
@@ -24,6 +29,9 @@ app.use(helmet());
 // parse the body of all post reqeusts
 app.use(express.json());
 
+// enable the request logger
+app.use(requestLogger);
+
 app.post('/signin', loginValid, login);
 app.post('/signup', signupValid, createUser);
 
@@ -31,6 +39,10 @@ app.use(auth);
 
 app.use('/users', userRouter);
 app.use('/cards', cardRouter);
+
+// enable & use error logger
+app.use(errorLogger);
+app.use(errors());
 
 app.get('*', (req, res, next) => {
   next(new ErrorManager(404, 'Requested resource not found'));
