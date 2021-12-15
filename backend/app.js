@@ -5,6 +5,7 @@ const { celebrate, Joi } = require('celebrate');
 const userRouter = require('./routes/users');
 const cardRouter = require('./routes/cards');
 const { createUser, login } = require('./controllers/users');
+const auth = require('./middlewares/auth');
 
 
 const { PORT = 3000 } = process.env;
@@ -28,9 +29,6 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/users', userRouter);
-app.use('/cards', cardRouter);
-
 app.post('/signin', login);
 app.post('/signup', celebrate({
   body: Joi.object().keys({
@@ -41,6 +39,11 @@ app.post('/signup', celebrate({
     password: Joi.string().min(8).required(),
   })
 }),createUser);
+
+app.use(auth);
+
+app.use('/users', userRouter);
+app.use('/cards', cardRouter);
 
 app.get('*', (req, res) => {
   res.status(404).send({ message: 'Requested resource not found' });
