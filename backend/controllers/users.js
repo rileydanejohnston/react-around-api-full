@@ -102,13 +102,7 @@ module.exports.createUser = (req, res) => {
       password: hash,
     }))
     // return everything except hashed password
-    .then((user) => res.status(201).send({
-      _id: user._id,
-      name: user.name,
-      about: user.about,
-      avatar: user.avatar,
-      email: user.email
-    }))
+    .then((user) => res.status(201).send({ data: user }))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         res.status(400).send({ message: 'Invalid information was submitted.' });

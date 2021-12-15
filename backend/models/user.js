@@ -37,11 +37,12 @@ const userSchema = new mongoose.Schema({
     minlength: 8,
     unique: true,
     required: true,
+    select: false,    // password hash isn't returned from DB by default
   },
 });
 
 userSchema.statics.findUserByCredentials = function findUserByCredentials (email, password) {
-  return this.findOne({ email })
+  return this.findOne({ email }).select('+password')    // gets password hash from DB
     .then((user) => {
       if (!user) {
         return Promise.reject(new Error('Incorrect password or email'));
