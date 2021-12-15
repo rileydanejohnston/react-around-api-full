@@ -40,6 +40,18 @@ app.get('*', (req, res) => {
   res.status(404).send({ message: 'Requested resource not found' });
 });
 
+// centralized error handling
+app.use((err, req, res, next) => {
+  const { statusCode = 500, message } = err;
+  res
+    .status(statusCode)
+    .send({
+      message : statusCode === 500
+      ? 'An error occured on the server'
+      : message
+    });
+})
+
 app.listen(PORT, () => {
   console.log(`App listening at port ${PORT}`);
 });
