@@ -1,8 +1,9 @@
 const Users = require('../models/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const ErrorManager = require('../errors/error-manager');
 
-module.exports.updateAvatar = (req, res) => {
+module.exports.updateAvatar = (req, res, next) => {
   const { avatar } = req.body;
   const { _id } = req.user;
 
@@ -13,13 +14,13 @@ module.exports.updateAvatar = (req, res) => {
     .then((user) => res.status(200).send({ data: user }))
     .catch((err) => {
       if (err.name === 'ValidatorError') {
-        res.status(400).send({ message: 'Invalid information was submitted.' });
+        next(new ErrorManager(400, 'Invalid information was submitted.'));
       }
-      res.status(500).send({ message: err });
+      next(new ErrorManager(500));
     });
 };
 
-module.exports.updateProfile = (req, res) => {
+module.exports.updateProfile = (req, res, next) => {
   const { name, about } = req.body;
 
   Users.findByIdAndUpdate(req.user._id, { name, about }, {
@@ -29,25 +30,25 @@ module.exports.updateProfile = (req, res) => {
     .then((user) => res.status(200).send({ data: user }))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        res.status(400).send({ message: 'Invalid information was submitted.' });
+        next(new ErrorManager(400, 'Invalid information was submitted.'));
       }
-      res.status(500).send({ message: err });
+      next(new ErrorManager(500));
     });
 };
 
-module.exports.getUsers = (req, res) => {
+module.exports.getUsers = (req, res, next) => {
   Users.find({})
     .orFail()
     .then((users) => res.status(200).send({ data: users }))
     .catch((err) => {
       if (err.name === 'DocumentNotFoundError') {
-        res.status(404).send({ message: 'Could not find any users.' });
+        next(new ErrorManager(404, 'Could not find any users.'));
       }
-      res.status(500).send({ message: err });
+      next(new ErrorManager(500));
     });
 };
 
-module.exports.getUser = (req, res) => {
+module.exports.getUser = (req, res, next) => {
   const { userId } = req.params;
 
   Users.findById(userId)
@@ -55,24 +56,24 @@ module.exports.getUser = (req, res) => {
     .then((user) => res.status(200).send({ data: user }))
     .catch((err) => {
       if (err.name === 'DocumentNotFoundError') {
-        res.status(404).send({ message: 'The user was not found.' });
+        next(new ErrorManager(404, 'The user was not found.'));
       } else if (err.name === 'CastError') {
-        res.status(400).send({ message: 'Invalid user ID' });
+        next(new ErrorManager(400, 'Invalid user ID.'));
       }
-      res.status(500).send({ message: err });
+      next(new ErrorManager(500));
     });
 };
 
-module.exports.getCurrentUser = (req, res) => {
+module.exports.getCurrentUser = (req, res, next) => {
   const { _id } = req.user;
 
   Users.findById({ _id })
     .orFail()
     .then((user) => res.status(200).send({ data: user }))
-    .catch((err) => res.status(403).send({ message: err }));
+    .catch((err) => next(new ErrorManager(403, 'Invalid authorization.')));
 };
 
-module.exports.login = (req, res) => {
+module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
 
   return Users.findUserByCredentials(email, password)
@@ -85,12 +86,10 @@ module.exports.login = (req, res) => {
 
       res.send({ token });
     })
-    .catch((err) => {
-      res.status(401).send({ message: err.message });
-    })
+    .catch((next));
 };
 
-module.exports.createUser = (req, res) => {
+module.exports.createUser = (req, res, next) => {
   const { name, about, avatar, email, password } = req.body;
 
   bcrypt.hash(password, 10)
@@ -105,7 +104,7 @@ module.exports.createUser = (req, res) => {
     .then((user) => res.status(201).send({ data: user }))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        res.status(400).send({ message: 'Invalid information was submitted.' });
+        next(new ErrorManager(400, 'Invalid information was submitted.'));
       }
       res.status(500).send({ message: err });
     });
