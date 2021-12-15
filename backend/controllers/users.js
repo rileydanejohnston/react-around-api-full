@@ -63,6 +63,15 @@ module.exports.getUser = (req, res) => {
     });
 };
 
+module.exports.getCurrentUser = (req, res) => {
+  const { _id } = req.user;
+
+  Users.findById({ _id })
+    .orFail()
+    .then((user) => res.status(200).send({ data: user }))
+    .catch((err) => res.status(403).send({ message: err }));
+};
+
 module.exports.login = (req, res) => {
   const { email, password } = req.body;
 

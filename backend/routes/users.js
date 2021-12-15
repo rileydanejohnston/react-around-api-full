@@ -1,8 +1,10 @@
 const router = require('express').Router();
 const { celebrate, Joi } = require('celebrate');
+const auth = require('../middlewares/auth');
 const {
   getUsers,
   getUser,
+  getCurrentUser,
   createUser,
   login,
   updateProfile,
@@ -11,6 +13,7 @@ const {
 
 router.get('/users', getUsers);
 router.get('/users/:userId', getUser);
+router.get('/users/me', getCurrentUser);
 router.patch('/users/me', updateProfile);
 router.patch('/users/me/avatar', updateAvatar);
 router.post('/signin', login);
