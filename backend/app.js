@@ -20,15 +20,6 @@ app.use(helmet());
 // parse the body of all post reqeusts
 app.use(express.json());
 
-// middleware to apply all cards the same owner ID
-app.use((req, res, next) => {
-  req.user = {
-    _id: '618c370909a5afd80fca18fa',
-  };
-
-  next();
-});
-
 app.post('/signin', login);
 app.post('/signup', celebrate({
   body: Joi.object().keys({
