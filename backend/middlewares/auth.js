@@ -14,11 +14,10 @@ module.exports = (req, res, next) => {
   let payload;
   try {
     payload = jwt.verify(token, 'secret-key');
-  }
-  catch (err) {
+  } catch (err) {
     next(new ErrorManager(403, 'Authorization required'));
   }
 
   req.user = payload;
   next();
-}
+};

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const ErrorManager = require('../errors/error-manager');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
+const ErrorManager = require('../errors/error-manager');
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -28,7 +28,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     validate: {
       validator: (v) => validator.isEmail(v),
-      message: 'Error! The email you entered is invalid'
+      message: 'Error! The email you entered is invalid',
     },
     unique: true,
     required: true,
@@ -38,12 +38,12 @@ const userSchema = new mongoose.Schema({
     minlength: 8,
     unique: true,
     required: true,
-    select: false,    // password hash isn't returned from DB by default
+    select: false, // password hash isn't returned from DB by default
   },
 });
 
-userSchema.statics.findUserByCredentials = function findUserByCredentials (email, password) {
-  return this.findOne({ email }).select('+password')    // gets password hash from DB
+userSchema.statics.findUserByCredentials = function findUserByCredentials(email, password) {
+  return this.findOne({ email }).select('+password') // gets password hash from DB
     .then((user) => {
       if (!user) {
         return Promise.reject(new ErrorManager(401, 'Incorrect password or email'));
@@ -56,8 +56,8 @@ userSchema.statics.findUserByCredentials = function findUserByCredentials (email
           }
 
           return user;
-      });
+        });
     });
-}
+};
 
 module.exports = mongoose.model('user', userSchema);

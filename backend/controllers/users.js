@@ -1,6 +1,6 @@
-const Users = require('../models/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const Users = require('../models/user');
 const ErrorManager = require('../errors/error-manager');
 
 module.exports.updateAvatar = (req, res, next) => {
@@ -70,7 +70,7 @@ module.exports.getCurrentUser = (req, res, next) => {
   Users.findById({ _id })
     .orFail()
     .then((user) => res.status(200).send({ data: user }))
-    .catch((err) => next(new ErrorManager(403, 'Invalid authorization.')));
+    .catch((next(new ErrorManager(403, 'Invalid authorization.'))));
 };
 
 module.exports.login = (req, res, next) => {
@@ -78,11 +78,11 @@ module.exports.login = (req, res, next) => {
 
   return Users.findUserByCredentials(email, password)
     .then((user) => {
-
       const token = jwt.sign(
         { _id: user._id },
         'secret-key',
-        { expiresIn: '7d' });
+        { expiresIn: '7d' },
+      );
 
       res.send({ token });
     })
@@ -90,7 +90,9 @@ module.exports.login = (req, res, next) => {
 };
 
 module.exports.createUser = (req, res, next) => {
-  const { name, about, avatar, email, password } = req.body;
+  const {
+    name, about, avatar, email, password,
+  } = req.body;
 
   bcrypt.hash(password, 10)
     .then((hash) => Users.create({

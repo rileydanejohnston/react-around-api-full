@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
+const { errors } = require('celebrate');
 const userRouter = require('./routes/users');
 const cardRouter = require('./routes/cards');
 const { createUser, login } = require('./controllers/users');
@@ -14,8 +15,6 @@ const {
   requestLogger,
   errorLogger,
 } = require('./middlewares/logger');
-const { errors } = require('celebrate');
-
 
 const { PORT = 3000 } = process.env;
 
@@ -54,12 +53,10 @@ app.use((err, req, res, next) => {
   res
     .status(statusCode)
     .send({
-      message : statusCode === 500
-      ? 'An error occured on the server'
-      : message
+      message: statusCode === 500
+        ? 'An error occured on the server'
+        : message,
     });
-})
-
-app.listen(PORT, () => {
-  console.log(`App listening at port ${PORT}`);
 });
+
+app.listen(PORT);
