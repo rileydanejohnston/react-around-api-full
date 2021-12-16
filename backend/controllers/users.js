@@ -91,14 +91,11 @@ module.exports.login = (req, res, next) => {
 
 module.exports.createUser = (req, res, next) => {
   const {
-    name, about, avatar, email, password,
+    email, password,
   } = req.body;
 
   bcrypt.hash(password, 10)
     .then((hash) => Users.create({
-      name,
-      about,
-      avatar,
       email,
       password: hash,
     }))

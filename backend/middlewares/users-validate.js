@@ -37,9 +37,6 @@ module.exports.loginValid = celebrate({
 
 module.exports.signupValid = celebrate({
   body: Joi.object().keys({
-    name: Joi.string().min(2).max(30),
-    about: Joi.string().min(2).max(30),
-    avatar: Joi.string().min(2).max(30),
     email: Joi.string().required(),
     password: Joi.string().min(8).required(),
   }),
