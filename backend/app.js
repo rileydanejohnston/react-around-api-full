@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const helmet = require('helmet');
 const { errors } = require('celebrate');
 const userRouter = require('./routes/users');
@@ -27,6 +28,10 @@ app.use(helmet());
 
 // parse the body of all post reqeusts
 app.use(express.json());
+
+// enable CORS
+app.use(cors());
+app.options('*', cors());
 
 // enable the request logger
 app.use(requestLogger);
