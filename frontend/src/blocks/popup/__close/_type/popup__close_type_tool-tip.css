@@ -1,0 +1,6 @@
+@media screen and (max-width: 625px){
+  .popup__close_type_tool-tip {
+    top: calc(-20.79px - 30px);
+    right: calc(50% - 15px);
+  }
+}

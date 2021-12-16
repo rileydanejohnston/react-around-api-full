@@ -1,0 +1,23 @@
+.auth__input {
+  margin-bottom: 30px;
+  background: #000;
+  border: none;
+  border-bottom: 2px solid #CCC;
+  color: #CCC;
+  height: 27px;
+
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 17px;
+}
+
+.auth__input:last-of-type {
+  margin-bottom: 0;
+}
+
+@media screen and (max-width: 625px){
+  .auth__input {
+
+  }
+}

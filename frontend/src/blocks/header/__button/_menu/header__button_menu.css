@@ -1,0 +1,5 @@
+.header__button_menu {
+  background: center / contain no-repeat url('../../../../images/menu.svg');
+  height: 24px;
+  width: 24px;
+}

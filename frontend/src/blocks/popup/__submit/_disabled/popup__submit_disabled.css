@@ -1,0 +1,8 @@
+.popup__submit_disabled {
+  opacity: .2;
+}
+.popup__submit_disabled:hover {
+  transition: none;
+  opacity: .2;
+  cursor: not-allowed;
+}
