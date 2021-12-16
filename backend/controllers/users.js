@@ -105,6 +105,6 @@ module.exports.createUser = (req, res, next) => {
       if (err.name === 'ValidationError') {
         next(new ErrorManager(400, 'Invalid information was submitted.'));
       }
-      res.status(500).send({ message: err });
+      next(new ErrorManager(500));
     });
 };
