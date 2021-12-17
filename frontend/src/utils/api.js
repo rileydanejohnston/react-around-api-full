@@ -110,12 +110,14 @@ class Api {
   }
 }
 
+/*
 const api = new Api({
-  baseUrl: "https://around.nomoreparties.co/v1/group-10",
+  baseUrl: 'http://localhost:3000',
   headers: {
       authorization: "2a32e80d-c23f-4ed9-9cf5-671c417d0702",
       "Content-Type": "application/json"
     }
 });
+*/
 
-export default api;
+export default Api;

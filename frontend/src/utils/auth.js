@@ -1,4 +1,5 @@
-const baseUrl = 'https://register.nomoreparties.co';
+// fix with env later
+const baseUrl = 'http://localhost:3000';
 
 const handleResponse = (res) => {
   if (res.ok){

@@ -7,7 +7,7 @@ import CurrentUserContext from '../contexts/CurrentUserContext';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
-import api from '../utils/api';
+// import api from '../utils/api';
 import {
   Switch,
   Route,
@@ -19,7 +19,7 @@ import Register from './Register';
 import InfoToolTip from './InfoToolTip';
 import * as auth from '../utils/auth';
 import ConfirmPopup from './ConfirmPopup';
-// import Api from '../utils/api';
+import Api from '../utils/api';
 
 function App() {
   const history = useHistory();
@@ -39,16 +39,6 @@ function App() {
   const [isSaving, setIsSaving] = useState(false);
   const [userToken, setUserToken] = useState('');
 
-  /*
-  let authApi = new Api({
-    baseUrl: "http://localhost:3000",
-    headers: {
-        Authorization: `Bearer ${userToken}`,
-        "Content-Type": "application/json"
-      }
-  });
-  */
-
   useEffect(() => {
     if (localStorage.getItem('jwt')){
       const jwt = localStorage.getItem('jwt');
@@ -63,19 +53,27 @@ function App() {
       .catch((err) => console.log(err));
     }
   }, []);
+
+  let authApi = new Api({
+    baseUrl: "http://localhost:3000",
+    headers: {
+        authorization: `Bearer ${userToken}`,
+        "Content-Type": "application/json"
+      }
+  });
   
   useEffect(() => {
-    api.getUserInfo()
-    .then(({ name, about, avatar, _id }) => {
-      setCurrentUser({ name, about, avatar, _id });
+    authApi.getUserInfo()
+    .then(({ data }) => {
+      setCurrentUser({ name: data.name, about: data.about, avatar: data.avatar, _id: data._id });
     })
     .catch((err) => console.log(err));
   }, []);
  
   useEffect(() => {
-    api.getCards()
-    .then((res) => {
-      const cardData = res.map((item) => {
+    authApi.getCards()
+    .then(({ data }) => {
+      const cardData = data.map((item) => {
         return { likes: item.likes, name: item.name, link: item.link, cardId: item._id, ownerId: item.owner._id }
       });
       setCards(cardData);
@@ -108,7 +106,7 @@ function App() {
   function handleCardLike(card) {
     const isLiked = card.likes.some(like => like._id === currentUser._id);
 
-    api.changeLikeStatus(card.cardId, !isLiked)
+    authApi.changeLikeStatus(card.cardId, !isLiked)
     .then((res) => {
       const newCards = cards.map((prevCard) => {
         if (prevCard.cardId === res._id) {
@@ -122,7 +120,7 @@ function App() {
   }
 
   function handleDeleteCard() {
-    api.deleteCard(deleteCard)
+    authApi.deleteCard(deleteCard)
     .then((res) => {
       const newCards = cards.filter((prevCard) => { return prevCard.cardId !== deleteCard });
       setCards(newCards);
@@ -142,7 +140,7 @@ function App() {
   }
 
   function handleUpdateUser(formInput) {
-    api.updateProfile(formInput)
+    authApi.updateProfile(formInput)
     .then((res) => {
       const updateUser = {...currentUser, name: res.name, about: res.about };
       setCurrentUser(updateUser);
@@ -154,7 +152,7 @@ function App() {
   }
 
   function handleUpdateAvatar(formInput) {
-    api.updateProfilePic(formInput)
+    authApi.updateProfilePic(formInput)
     .then((res) => {
       const updateUser = { ...currentUser, avatar: res.avatar };
       setCurrentUser(updateUser);
@@ -166,14 +164,15 @@ function App() {
   }
 
   function handleAddPlaceSubmit(name, url) {
-    api.addCard(name, url)
-    .then((res) => {
+    authApi.addCard(name, url)
+    .then(({ data }) => {
+      console.log({ data });
       const newCard = {
-        likes: res.likes, 
-        name: res.name, 
-        link: res.link, 
-        cardId: res._id, 
-        ownerId: res.owner._id
+        likes: data.likes, 
+        name: data.name, 
+        link: data.link, 
+        cardId: data._id, 
+        ownerId: data.owner,
       };
 
       setCards([newCard, ...cards]);
