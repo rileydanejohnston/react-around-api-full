@@ -7,7 +7,7 @@ export default function Card({ card, onCardLike, onCardClick, onDeleteClick }) {
 
   const isOwner = currentUser._id === card.ownerId;
 
-  const isLiked = card.likes.some(like => like._id === currentUser._id);
+  const isLiked = card.likes.some(like => like === currentUser._id);
   const likeBtnClass = isLiked ? 'cards__like-button cards__like-button_active' : 'cards__like-button';
 
   function handleClick() {

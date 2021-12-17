@@ -11,7 +11,7 @@ const validateUrl = (value, helpers) => {
 
 module.exports.editCardLikeValid = celebrate({
   params: Joi.object().keys({
-    cardId: Joi.string().min(2).required(),
+    cardId: Joi.string().min(20).required(),
     // req.user._id?
   }),
 });

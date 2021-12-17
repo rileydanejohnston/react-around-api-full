@@ -89,7 +89,7 @@ class Api {
   }
 
   changeLikeStatus(cardId, isLiked) {
-    if (isLiked){
+    if (isLiked === true){
       return this.addLike(cardId);
     }
     else {

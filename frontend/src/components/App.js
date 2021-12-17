@@ -54,7 +54,6 @@ function App() {
       const jwt = localStorage.getItem('jwt');
       const email = localStorage.getItem('email');
 
-      console.log(`page return token: ${jwt}`);
       // set state variables
       setUserToken(jwt);
       setLoggedIn(true);
@@ -111,13 +110,14 @@ function App() {
   }, [isToolTipOpen, isEditAvatarPopupOpen, isEditProfilePopupOpen, isAddPlacePopupOpen, isConfirmOpen])
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some(like => like._id === currentUser._id);
+    // has the user liked the card? True or false
+    const isLiked = card.likes.some(like => like === currentUser._id);
 
     authApi.changeLikeStatus(card.cardId, !isLiked)
-    .then((res) => {
+    .then(({ data }) => {
       const newCards = cards.map((prevCard) => {
-        if (prevCard.cardId === res._id) {
-          return { likes: res.likes, name: res.name, link: res.link, cardId: res._id, ownerId: res.owner._id };
+        if (prevCard.cardId === data._id) {
+          return { likes: data.likes, name: data.name, link: data.link, cardId: data._id, ownerId: data.owner };
         }
         return prevCard;
       });
@@ -173,7 +173,6 @@ function App() {
   function handleAddPlaceSubmit(name, url) {
     authApi.addCard(name, url)
     .then(({ data }) => {
-      console.log({ data });
       const newCard = {
         likes: data.likes, 
         name: data.name, 
@@ -252,7 +251,6 @@ function App() {
         localStorage.setItem('jwt', res.token);
         localStorage.setItem('email', email);
         setUserToken(res.token);
-        console.log(`sign in token: ${res.token}`);
         setLoggedIn(true);
         history.push('/');
       }
