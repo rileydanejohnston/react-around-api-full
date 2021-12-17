@@ -141,8 +141,8 @@ function App() {
 
   function handleUpdateUser(formInput) {
     authApi.updateProfile(formInput)
-    .then((res) => {
-      const updateUser = {...currentUser, name: res.name, about: res.about };
+    .then(({ data }) => {
+      const updateUser = {...currentUser, name: data.name, about: data.about };
       setCurrentUser(updateUser);
     })
     .catch((err) => console.log(err))
