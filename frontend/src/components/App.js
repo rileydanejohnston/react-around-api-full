@@ -81,7 +81,7 @@ function App() {
     authApi.getCards()
     .then(({ data }) => {
       const cardData = data.map((item) => {
-        return { likes: item.likes, name: item.name, link: item.link, cardId: item._id, ownerId: item.owner._id }
+        return { likes: item.likes, name: item.name, link: item.link, cardId: item._id, ownerId: item.owner }
       });
       setCards(cardData);
     })
