@@ -36,41 +36,12 @@ module.exports.updateProfile = (req, res, next) => {
     });
 };
 
-module.exports.getUsers = (req, res, next) => {
-  Users.find({})
-    .orFail()
-    .then((users) => res.status(200).send({ data: users }))
-    .catch((err) => {
-      if (err.name === 'DocumentNotFoundError') {
-        next(new ErrorManager(404, 'Could not find any users.'));
-      }
-      next(new ErrorManager(500));
-    });
-};
-
-module.exports.getUser = (req, res, next) => {
-  const { userId } = req.params;
-
-  Users.findById(userId)
-    .orFail()
-    .then((user) => res.status(200).send({ data: user }))
-    .catch((err) => {
-      if (err.name === 'DocumentNotFoundError') {
-        next(new ErrorManager(404, 'The user was not found.'));
-      } else if (err.name === 'CastError') {
-        next(new ErrorManager(400, 'Invalid user ID.'));
-      }
-      next(new ErrorManager(500));
-    });
-};
-
 module.exports.getCurrentUser = (req, res, next) => {
   const { _id } = req.user;
 
-  Users.findById({ _id })
-    .orFail()
+  Users.findById(_id)
     .then((user) => res.status(200).send({ data: user }))
-    .catch((next(new ErrorManager(403, 'Invalid authorization.'))));
+    .catch(next);
 };
 
 module.exports.login = (req, res, next) => {
@@ -78,15 +49,12 @@ module.exports.login = (req, res, next) => {
 
   return Users.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign(
-        { _id: user._id },
-        'secret-key',
-        { expiresIn: '7d' },
+      const token = jwt.sign({ _id: user._id }, 'secret-key', { expiresIn: '7d' },
       );
 
       res.send({ token });
     })
-    .catch((next));
+    .catch(next);
 };
 
 module.exports.createUser = (req, res, next) => {

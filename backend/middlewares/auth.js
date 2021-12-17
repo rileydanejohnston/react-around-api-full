@@ -4,8 +4,8 @@ const ErrorManager = require('../errors/error-manager');
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
 
-  if (!authorization || !authorization.startsWith('Bearer')) {
-    next(new ErrorManager(403, 'Authorization required'));
+  if (!authorization || !authorization.startsWith('Bearer ')) {
+    throw new ErrorManager(403, 'Authorization required -- no auth header');
   }
 
   // extract token

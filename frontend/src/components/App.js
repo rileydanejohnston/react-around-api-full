@@ -40,10 +40,10 @@ function App() {
   const [userToken, setUserToken] = useState('');
 
   let authApi = new Api({
-    baseUrl: "http://localhost:3000",
+    baseUrl: 'http://localhost:3000',
     headers: {
-        authorization: `Bearer ${userToken}`,
-        "Content-Type": "application/json"
+      'Content-Type': 'application/json',
+        authorization: `Bearer ${userToken}`
       }
   });
 
@@ -53,22 +53,21 @@ function App() {
       const jwt = localStorage.getItem('jwt');
       const email = localStorage.getItem('email');
 
+      console.log(`page return token: ${jwt}`);
       // set state variables
       setUserToken(jwt);
       setLoggedIn(true);
       setUserEmail(email);
 
-      // navigate to main
-      history.push('/');
-    }
-  }, []);
-  
-  useEffect(() => {
-    authApi.getUserInfo()
-    .then(({ data }) => {
-      setCurrentUser({ name: data.name, about: data.about, avatar: data.avatar, _id: data._id });
-    })
-    .catch((err) => console.log(err));
+      auth.authorize(jwt)
+        .then(({ data }) => {
+          setCurrentUser({ name: data.name, about: data.about, avatar: data.avatar, _id: data._id });
+        })
+        .catch((err) => console.log(err));
+
+          // navigate to main
+          history.push('/');
+        }
   }, []);
  
   useEffect(() => {
@@ -242,13 +241,12 @@ function App() {
   function handleSignin(email, password) {
     auth.signin(email, password)
     .then((res) => {
-      console.log({ res });
       if (res.token){
         localStorage.setItem('jwt', res.token);
         localStorage.setItem('email', email);
-        setLoggedIn(true);
         setUserToken(res.token);
-        setUserEmail(email);
+        console.log(`sign in token: ${res.token}`);
+        setLoggedIn(true);
         history.push('/');
       }
     })

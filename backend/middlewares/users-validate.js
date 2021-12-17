@@ -6,7 +6,7 @@ function validateUrl(string) {
 
 module.exports.updateAvatarValid = celebrate({
   body: Joi.object().keys({
-    avatar: Joi.string().min(2).max(30).custom(validateUrl),
+    avatar: Joi.string().min(8),   // link?
     // validate req.user??
   }),
 });
@@ -17,16 +17,6 @@ module.exports.updateProfileValid = celebrate({
     about: Joi.string().min(2).max(30),
   }),
 });
-
-// validate getUsers?
-
-module.exports.getUserValid = celebrate({
-  params: Joi.object().keys({
-    userId: Joi.string().required(),
-  }),
-});
-
-// validate req.user in getCurrentUser??
 
 module.exports.loginValid = celebrate({
   body: Joi.object().keys({
