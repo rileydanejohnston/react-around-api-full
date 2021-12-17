@@ -153,8 +153,8 @@ function App() {
 
   function handleUpdateAvatar(formInput) {
     authApi.updateProfilePic(formInput)
-    .then((res) => {
-      const updateUser = { ...currentUser, avatar: res.avatar };
+    .then(({ data }) => {
+      const updateUser = { ...currentUser, avatar: data.avatar };
       setCurrentUser(updateUser);
     })
     .catch((err) => console.log(err))
