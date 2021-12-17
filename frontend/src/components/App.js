@@ -47,6 +47,7 @@ function App() {
       }
   });
 
+  // get JWT from storage, set userToken
   useEffect(() => {
     if (localStorage.getItem('jwt')){
       // get token/email from storage
@@ -59,17 +60,23 @@ function App() {
       setLoggedIn(true);
       setUserEmail(email);
 
-      auth.authorize(jwt)
+      // navigate to main
+      history.push('/');
+    }
+  }, []);
+
+  // get user's info once userToken is set
+  // need to be authorized to get user's info
+  useEffect(() => {
+    auth.authorize(userToken)
         .then(({ data }) => {
           setCurrentUser({ name: data.name, about: data.about, avatar: data.avatar, _id: data._id });
         })
         .catch((err) => console.log(err));
-
-          // navigate to main
-          history.push('/');
-        }
-  }, []);
+  }, [userToken]);
  
+  // get cards once userToken is set
+  // need to be authorized to get cards
   useEffect(() => {
     authApi.getCards()
     .then(({ data }) => {
@@ -79,7 +86,7 @@ function App() {
       setCards(cardData);
     })
     .catch((err) => console.log(err));
-  }, []);
+  }, [userToken]);
 
   useEffect(() => {
     const closeByEscape = (e) => {
