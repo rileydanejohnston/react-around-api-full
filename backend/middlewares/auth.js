@@ -5,7 +5,7 @@ module.exports = (req, res, next) => {
   const { authorization } = req.headers;
 
   if (!authorization || !authorization.startsWith('Bearer')) {
-    next(new ErrorManager(403, 'asdfasdf Authorization required'));
+    next(new ErrorManager(403, 'Authorization required'));
   }
 
   // extract token

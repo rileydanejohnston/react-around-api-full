@@ -36,7 +36,6 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     minlength: 8,
-    unique: true,
     required: true,
     select: false, // password hash isn't returned from DB by default
   },

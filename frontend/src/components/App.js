@@ -39,21 +39,6 @@ function App() {
   const [isSaving, setIsSaving] = useState(false);
   const [userToken, setUserToken] = useState('');
 
-  useEffect(() => {
-    if (localStorage.getItem('jwt')){
-      const jwt = localStorage.getItem('jwt');
-      setUserToken(jwt);
-      const email = localStorage.getItem('email');
-      auth.authorize(jwt)
-      .then((res) => {
-        setLoggedIn(true);
-        setUserEmail(email);
-        history.push('/');
-      })
-      .catch((err) => console.log(err));
-    }
-  }, []);
-
   let authApi = new Api({
     baseUrl: "http://localhost:3000",
     headers: {
@@ -61,6 +46,22 @@ function App() {
         "Content-Type": "application/json"
       }
   });
+
+  useEffect(() => {
+    if (localStorage.getItem('jwt')){
+      // get token/email from storage
+      const jwt = localStorage.getItem('jwt');
+      const email = localStorage.getItem('email');
+
+      // set state variables
+      setUserToken(jwt);
+      setLoggedIn(true);
+      setUserEmail(email);
+
+      // navigate to main
+      history.push('/');
+    }
+  }, []);
   
   useEffect(() => {
     authApi.getUserInfo()
@@ -241,6 +242,7 @@ function App() {
   function handleSignin(email, password) {
     auth.signin(email, password)
     .then((res) => {
+      console.log({ res });
       if (res.token){
         localStorage.setItem('jwt', res.token);
         localStorage.setItem('email', email);

@@ -27,7 +27,7 @@ export const signin = (email, password) => {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ password, email })
+    body: JSON.stringify({ email, password })
   })
   .then((res) => {
     return handleResponse(res);
@@ -39,7 +39,7 @@ export const authorize = (token) => {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
+      authorization: `Bearer ${token}`
     }
   })
   .then((res) => {
