@@ -67,7 +67,7 @@ function App() {
   // get user's info once userToken is set
   // need to be authorized to get user's info
   useEffect(() => {
-    auth.authorize(userToken)
+    authApi.getUserInfo()
         .then(({ data }) => {
           setCurrentUser({ name: data.name, about: data.about, avatar: data.avatar, _id: data._id });
         })
@@ -251,6 +251,7 @@ function App() {
         localStorage.setItem('jwt', res.token);
         localStorage.setItem('email', email);
         setUserToken(res.token);
+        setUserEmail(email);
         setLoggedIn(true);
         history.push('/');
       }
