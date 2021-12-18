@@ -16,7 +16,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "deploy": "npm run build && scp -r ./build/* rileydanejohnston@around-the-us.students.nomoreparties.site:/home/rileydanejohnston/frontend",
+    "deploy": "npm run build && scp -r ./build/* rileydanejohnston@around-the-us.students.nomoreparties.site:/home/rileydanejohnston/react-around-api-full/frontend/build",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

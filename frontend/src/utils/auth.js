@@ -1,5 +1,7 @@
 // fix with env later
-const baseUrl = 'http://localhost:3000';
+const { NODE_ENV } = process.env;
+
+const baseUrl = NODE_ENV === 'production' ? 'https://api.around-the-us.students.nomoreparties.site' : 'http://localhost:3000';
 
 const handleResponse = (res) => {
   if (res.ok){
