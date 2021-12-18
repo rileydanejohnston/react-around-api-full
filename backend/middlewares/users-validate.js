@@ -1,15 +1,8 @@
 const { celebrate, Joi, validator } = require('celebrate');
 
-/*
-function validateUrl(string) {
-  return validator.isURL(string);
-}
-*/
-
 module.exports.updateAvatarValid = celebrate({
   body: Joi.object().keys({
-    avatar: Joi.string().min(8),   // link?
-    // validate req.user??
+    avatar: Joi.string().min(8),
   }),
 });
 
