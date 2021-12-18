@@ -23,6 +23,7 @@ import Api from '../utils/api';
 
 function App() {
   const history = useHistory();
+  const { NODE_ENV } = process.env;
 
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
@@ -40,7 +41,7 @@ function App() {
   const [userToken, setUserToken] = useState('');
 
   let authApi = new Api({
-    baseUrl: 'http://localhost:3000',
+    baseUrl: NODE_ENV === 'production' ? 'https://api.around-the-us.students.nomoreparties.site' : 'http://localhost:3000',
     headers: {
       'Content-Type': 'application/json',
         authorization: `Bearer ${userToken}`
