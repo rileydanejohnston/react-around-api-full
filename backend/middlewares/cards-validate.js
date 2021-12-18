@@ -1,7 +1,9 @@
 const { celebrate, Joi } = require('celebrate');
 
 /*
-*** this was my implementation for the validator.isURL method per the lesson. I could not get it to work for the life of me. The error I get is "\"link\" failed custom validation because Cannot read property 'isURL' of undefined"
+*** this was my implementation for the validator.isURL method per the lesson.
+I could not get it to work for the life of me.
+error-> "\"link\" failed custom validation because Cannot read property 'isURL' of undefined"
 const { celebrate, Joi } = require('celebrate');
 
 const validateURL = (value, helpers) => {
