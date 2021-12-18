@@ -2,7 +2,7 @@ const { celebrate, Joi } = require('celebrate');
 
 module.exports.updateAvatarValid = celebrate({
   body: Joi.object().keys({
-    avatar: Joi.string().min(8),
+    avatar: Joi.string().required().regex(/\w{4,5}\S{3,}/),
   }),
 });
 
