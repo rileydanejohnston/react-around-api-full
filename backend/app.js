@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -64,5 +65,5 @@ app.use((err, req, res, next) => {
         : message,
     });
 });
-
+console.log(process.env.NODE_ENV);
 app.listen(PORT);

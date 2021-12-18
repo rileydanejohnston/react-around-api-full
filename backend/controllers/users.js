@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Users = require('../models/user');
 const ErrorManager = require('../errors/error-manager');
+const { NODE_ENV, JWT_SECRET } = process.env;
 
 module.exports.updateAvatar = (req, res, next) => {
   const { avatar } = req.body;
@@ -49,7 +50,10 @@ module.exports.login = (req, res, next) => {
 
   return Users.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, 'secret-key', { expiresIn: '7d' },
+      const token = jwt.sign(
+        { _id: user._id },
+        NODE_ENV === 'production' ? JWT_SECRET : 'secret-key',
+        { expiresIn: '7d' },
       );
 
       res.send({ token });
