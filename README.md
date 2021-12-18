@@ -6,5 +6,5 @@ This repository contains the full API of "Around the U.S." project that features
 [Around The U.S. repository](https://github.com/rileydanejohnston/react-around-api-full)<br /><br />
 
 * a link to the website that hosts your API.<br />
-[Live site URL 1](https://around-the-us.students.nomoreparties.site) - around-the-us.students.nomoreparties.site<br />
-[Live site URL 2](https://www.around-the-us.students.nomoreparties.site) - www.around-the-us.students.nomoreparties.site
+[around-the-us.students.nomoreparties.site](https://around-the-us.students.nomoreparties.site)<br />
+[www.around-the-us.students.nomoreparties.site](https://www.around-the-us.students.nomoreparties.site)
