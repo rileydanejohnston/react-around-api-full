@@ -1,4 +1,4 @@
-const { celebrate, Joi, validator } = require('celebrate');
+const { celebrate, Joi } = require('celebrate');
 
 module.exports.editCardLikeValid = celebrate({
   params: Joi.object().keys({

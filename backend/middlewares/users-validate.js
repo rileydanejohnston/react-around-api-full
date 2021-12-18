@@ -1,4 +1,4 @@
-const { celebrate, Joi, validator } = require('celebrate');
+const { celebrate, Joi } = require('celebrate');
 
 module.exports.updateAvatarValid = celebrate({
   body: Joi.object().keys({

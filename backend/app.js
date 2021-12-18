@@ -72,5 +72,5 @@ app.use((err, req, res, next) => {
         : message,
     });
 });
-console.log(process.env.NODE_ENV);
+
 app.listen(PORT);

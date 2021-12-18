@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Users = require('../models/user');
 const ErrorManager = require('../errors/error-manager');
+
 const { NODE_ENV, JWT_SECRET } = process.env;
 
 module.exports.updateAvatar = (req, res, next) => {
