@@ -44,7 +44,8 @@ app.use(auth);
 app.use('/users', userRouter);
 app.use('/cards', cardRouter);
 
-// enable & use error logger
+// use error logger
+// errors() is for celebrate
 app.use(errorLogger);
 app.use(errors());
 
