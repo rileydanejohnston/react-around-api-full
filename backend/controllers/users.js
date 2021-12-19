@@ -16,7 +16,7 @@ module.exports.updateAvatar = (req, res, next) => {
     .then((user) => res.status(200).send({ data: user }))
     .catch((err) => {
       if (err.name === 'ValidatorError') {
-        next(new ErrorManager(400, 'Invalid information was submitted.'));
+        next(new ErrorManager(400, 'Update avatar failed. Invalid information was submitted.'));
       }
       next(new ErrorManager(500));
     });
@@ -32,7 +32,7 @@ module.exports.updateProfile = (req, res, next) => {
     .then((user) => res.status(200).send({ data: user }))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        next(new ErrorManager(400, 'Invalid information was submitted.'));
+        next(new ErrorManager(400, 'Update profile failed. Invalid information was submitted.'));
       }
       next(new ErrorManager(500));
     });
@@ -76,7 +76,7 @@ module.exports.createUser = (req, res, next) => {
     .then((user) => res.status(201).send({ data: user }))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        next(new ErrorManager(400, 'Invalid information was submitted.'));
+        next(new ErrorManager(400, 'Create user failed. Invalid information was submitted.'));
       }
       next(new ErrorManager(500));
     });
