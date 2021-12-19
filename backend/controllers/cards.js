@@ -8,9 +8,9 @@ module.exports.dislikeCard = (req, res, next) => Cards.findByIdAndUpdate(req.par
   .then((likes) => res.status(200).send({ data: likes }))
   .catch((err) => {
     if (err.name === 'DocumentNotFoundError') {
-      next(new ErrorManager(404, 'The card was not found.'));
+      next(new ErrorManager(404, 'Dislike card failed. The card was not found.'));
     } else if (err.name === 'CastError') {
-      next(new ErrorManager(400, 'The submitted card ID is an invalid ID number.'));
+      next(new ErrorManager(400, 'Dislike card failed. The submitted card ID is an invalid ID number.'));
     }
     next(new ErrorManager(500));
   });
@@ -23,9 +23,9 @@ module.exports.likeCard = (req, res, next) => {
     .then((likes) => res.status(200).send({ data: likes }))
     .catch((err) => {
       if (err.name === 'DocumentNotFoundError') {
-        next(new ErrorManager(404, 'The card was not found.'));
+        next(new ErrorManager(404, 'Like card failed. The card was not found. '));
       } else if (err.name === 'CastError') {
-        next(new ErrorManager(400, 'The submitted card ID is an invalid ID number.'));
+        next(new ErrorManager(400, 'Like card failed. The submitted card ID is an invalid ID number.'));
       }
       next(new ErrorManager(500));
     });
@@ -37,7 +37,7 @@ module.exports.getCards = (req, res, next) => {
     .then((cards) => res.status(200).send({ data: cards }))
     .catch((err) => {
       if (err.name === 'DocumentNotFoundError') {
-        next(new ErrorManager(404, 'Could not find any cards.'));
+        next(new ErrorManager(404, 'Get cards failed. Could not find any cards.'));
       }
       next(new ErrorManager(500));
     });
@@ -51,7 +51,7 @@ module.exports.createCard = (req, res, next) => {
     .then((card) => res.status(201).send({ data: card }))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        next(new ErrorManager(400, 'Invalid information was submitted.'));
+        next(new ErrorManager(400, 'Create card failed. Invalid information was submitted.'));
       }
       next(new ErrorManager(500));
     });
@@ -63,9 +63,9 @@ module.exports.deleteCard = (req, res, next) => {
     .then((card) => res.status(200).send({ data: card }))
     .catch((err) => {
       if (err.name === 'CastError') {
-        next(new ErrorManager(400, 'Invalid user ID.'));
+        next(new ErrorManager(400, 'Delete card failed. The submitted card ID is an invalid ID number.'));
       } else if (err.name === 'DocumentNotFoundError') {
-        next(new ErrorManager(404, 'Could not find that card.'));
+        next(new ErrorManager(404, 'Delete card failed. Could not find that card.'));
       }
       next(new ErrorManager(500));
     });
