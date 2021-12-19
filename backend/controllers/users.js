@@ -73,10 +73,22 @@ module.exports.createUser = (req, res, next) => {
       password: hash,
     }))
     // return everything except hashed password
-    .then((user) => res.status(201).send({ data: user }))
+    .then(({ name, about, avatar, email, _id }) => {
+      res.status(201).send({
+        data: {
+          name,
+          about,
+          avatar,
+          email,
+          _id
+        }
+      });
+    })
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new ErrorManager(400, 'Create user failed. Invalid information was submitted.'));
+      } else if (err.name === 'MongoServerError') {
+        next(new ErrorManager(409, 'Create user failed. Email is already registered.'));
       }
       next(new ErrorManager(500));
     });
