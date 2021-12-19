@@ -10,7 +10,7 @@ module.exports.dislikeCard = (req, res, next) => Cards.findByIdAndUpdate(req.par
     if (err.name === 'DocumentNotFoundError') {
       next(new ErrorManager(404, 'The card was not found.'));
     } else if (err.name === 'CastError') {
-      next(new ErrorManager(400, 'The card was not found.'));
+      next(new ErrorManager(400, 'The submitted card ID is an invalid ID number.'));
     }
     next(new ErrorManager(500));
   });
@@ -25,7 +25,7 @@ module.exports.likeCard = (req, res, next) => {
       if (err.name === 'DocumentNotFoundError') {
         next(new ErrorManager(404, 'The card was not found.'));
       } else if (err.name === 'CastError') {
-        next(new ErrorManager(400, 'The card was not found.'));
+        next(new ErrorManager(400, 'The submitted card ID is an invalid ID number.'));
       }
       next(new ErrorManager(500));
     });
