@@ -1,5 +1,6 @@
 const Cards = require('../models/card');
 const ErrorManager = require('../errors/error-manager');
+const { Error } = require('mongoose');
 
 module.exports.dislikeCard = (req, res, next) => Cards.findByIdAndUpdate(req.params.cardId,
   { $pull: { likes: req.user._id } }, // remove _id from the array
@@ -58,11 +59,19 @@ module.exports.createCard = (req, res, next) => {
 };
 
 module.exports.deleteCard = (req, res, next) => {
-  Cards.findByIdAndRemove(req.params.id)
+  Cards.findById(req.params.id)
     .orFail()
+    .then(({ owner }) => {
+      if (owner._id.toString() === req.user._id){
+        return Cards.findByIdAndRemove(req.params.id)
+      }
+      throw new Error('PermissionsError');
+    })
     .then((card) => res.status(200).send({ data: card }))
     .catch((err) => {
-      if (err.name === 'CastError') {
+      if (err.message === 'PermissionsError') {
+        next(new ErrorManager(403, 'Delete card failed. You are not the owner of this card.'));
+      } else if (err.name === 'CastError') {
         next(new ErrorManager(400, 'Delete card failed. The submitted card ID is an invalid ID number.'));
       } else if (err.name === 'DocumentNotFoundError') {
         next(new ErrorManager(404, 'Delete card failed. Could not find that card.'));
