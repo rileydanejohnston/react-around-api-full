@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 const { errors } = require('celebrate');
 const userRouter = require('./routes/users');
@@ -17,6 +18,11 @@ const {
   requestLogger,
   errorLogger,
 } = require('./middlewares/logger');
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 1
+})
 
 const { PORT = 3000 } = process.env;
 
@@ -43,6 +49,8 @@ app.get('/crash-test', () => {
     throw new Error('Server will crash now');
   }, 0);
 });
+
+app.use(limiter);
 
 app.post('/signin', loginValid, login);
 app.post('/signup', signupValid, createUser);
