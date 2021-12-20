@@ -73,15 +73,15 @@ module.exports.createUser = (req, res, next) => {
       password: hash,
     }))
     // return everything except hashed password
-    .then(({ name, about, avatar, email, _id }) => {
+    .then((user) => {
       res.status(201).send({
         data: {
-          name,
-          about,
-          avatar,
-          email,
-          _id
-        }
+          name: user.name,
+          about: user.about,
+          avatar: user.avatar,
+          email: user.email,
+          _id: user._id,
+        },
       });
     })
     .catch((err) => {

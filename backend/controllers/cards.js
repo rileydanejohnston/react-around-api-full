@@ -1,6 +1,6 @@
+const { Error } = require('mongoose');
 const Cards = require('../models/card');
 const ErrorManager = require('../errors/error-manager');
-const { Error } = require('mongoose');
 
 module.exports.dislikeCard = (req, res, next) => Cards.findByIdAndUpdate(req.params.cardId,
   { $pull: { likes: req.user._id } }, // remove _id from the array
@@ -62,8 +62,8 @@ module.exports.deleteCard = (req, res, next) => {
   Cards.findById(req.params.id)
     .orFail()
     .then(({ owner }) => {
-      if (owner._id.toString() === req.user._id){
-        return Cards.findByIdAndRemove(req.params.id)
+      if (owner._id.toString() === req.user._id) {
+        return Cards.findByIdAndRemove(req.params.id);
       }
       throw new Error('PermissionsError');
     })
