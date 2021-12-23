@@ -43,13 +43,6 @@ app.options('*', cors());
 // enable the request logger
 app.use(requestLogger);
 
-// *** REMOVE AFTER CODE REVIEW ***
-app.get('/crash-test', () => {
-  setTimeout(() => {
-    throw new Error('Server will crash now');
-  }, 0);
-});
-
 app.use(limiter);
 
 app.post('/signin', loginValid, login);
