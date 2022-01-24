@@ -19,58 +19,15 @@
 * responsive design
 
 ---
-
-## Frontend Technologies
-The frontend of *Around the U.S.* was built with React. It uses:
-* functional components
-* hooks: states, contexts, effects
-* JSON web tokens: tokens are saved in localStorage to simplify the authentication process for returning users
-* page navigation done with a switch, routes, and protected routes
-* an Api class with methods for each API call
-* promises: then statements to handle responses, and catch statements to handle errors
-
----
-
-## Backend Technologies
-The backend of the *Around the U.S.* uses Express.js and MongoDB.
-
-### Infrastructure/security/misc
-
-* all requests and errors are logged with winston/winston-express
-* DDoS protection with a request limit
-* HTTP headers set with the helmut library
-* enabled CORS
-* auth middleware protects all routes (except signin and signup) which checks for a token in the request's authorization header
-* simplify errors with ErrorManager class and centralized error handling
-* uniform formatting with eslint (airbnb)
-
----
-
-### Validation middlewares
-All incoming data is validated with the celebrate library before reaching the controllers. If the request has invalid data, the controller will not run. For example, the card ID is required in order to like/dislike a card. The card ID must meet the following conditions to be considered valid:
-* must be a string type
-* must be at least 20 characters
-* an ID is required
-
-Please see /backend/middlewares/cards-validate and /backend/middlewares/users-validate to see the data requirements
-
----
-
-### Mongoose/Schemas/Controllers
-Mongoose is used to interact with our database (MongoDB) using JavaScript. It enables us to:
-* create schemas and models
-* use mongoose methods to perform CRUD operations: create, findById, FindByIdAndRemove, etc.
-* connect the user model and the card model. Each card has an owner property which is the user's ID
-
----
-
-### JSON web tokens
-JSON web tokens are used for authentication in the backend. A token gets created when a user signs in. The auth middleware checks to make sure each request (excluding signin and signup) has an authorization header with a valid token. If the request doesn't have a token or an authorization header, the request is considered invalid and will not be executed.
-
----
-
-### Bcryptjs
-Bcryptjs is used to protect the user's password. The user's password is hashed with a 10 character salt before being stored in the database. 
+## Technologies and Libraries
+MongoDB - Express - React - Node
+* functional components, hooks (state, context, effects), navigation
+* CSS: makes everything look sharp and behave responsively
+* JSON web tokens: simplifies the authentication process
+* celebrate: inbound data validation
+* mongoose: allows JavaScript to work with our database (MongoDB)
+* bcrypt: protects passwords with hashes and a 10 character salt
+* middlewares: express request limiter, request and error logging with winston/express-winston, enabling CORS, authorization, HTTP headers with helmut
 
 ---
 
