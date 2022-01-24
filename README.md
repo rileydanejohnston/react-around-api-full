@@ -8,12 +8,22 @@
 
 ## Application Features
 
-* create an account and sign in
+* the user can create an account an sign in
+![Sign up page](./frontend/src/images/around-signup.png)
+* if everything goes well, the user will see a confirmation modal
+![Register success modal](./frontend/src/images/around-register-success.png)
+* if there is an issue, the user will see an error modal. Common causes for errors are the email is already registered, the email is not a valid email, the email or password are missing, and the password is too short or too long
+![Register error modal](./frontend/src/images/around-register-failure.png)
+* this is an overview of what the application can do
+![How to use the application](./frontend/src/images/around-functionality.jpg)
 * edit profile section: avatar, name, about me
 * add cards by submitting a valid link and name
-* delete cards (users can only delete cards they created)
-* like cards
-* clicking the card photo enlarges the photo via a modal
+* here's an example of what a modal looks like. They all look pretty similar, this is the add card modal
+![Add card modal](./frontend/src/images/around-add-place-popup.png)
+* delete cards (users can only delete cards they created, see overview)
+* like cards (see overview)
+* clicking the card photo enlarges the photo via a modal. Here's what that looks like
+![View card modal](./frontend/src/images/around-image-click-popup.png)
 * modals can be closed by pressing escape, clicking outside of the overlay of the modal, or by clicking the X icon in the top right corner
 * users will remain signed in when they close the app in one tab then open the app in another tab (JSON web tokens and localStorage)
 * responsive design
