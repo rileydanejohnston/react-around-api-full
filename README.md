@@ -1,5 +1,5 @@
 # Around the U.S.
-*Around the U.S.* is a social media site where users can make an account, edit their profiles, and interact with photos. 
+*Around the U.S.* is a social media site where users can make an account, edit their profiles, and interact with photos. [You can watch the demo here!](https://www.loom.com/share/d4e0d3b5ecb145a9a897f135fe692965)
 <br><br>
 [around-the-us.students.nomoreparties.site](https://around-the-us.students.nomoreparties.site)<br />
 [www.around-the-us.students.nomoreparties.site](https://www.around-the-us.students.nomoreparties.site)
