@@ -30,7 +30,7 @@
 
 ---
 ## Technologies and Libraries
-MongoDB - Express - React - Node
+MongoDB - Express.js - React - Node.js
 * functional components, hooks (state, context, effects), navigation
 * CSS: makes everything look sharp and behave responsively
 * JSON web tokens: simplifies the authentication process
