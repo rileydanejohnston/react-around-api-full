@@ -3,8 +3,7 @@
 <br><br>
 [around-the-us.students.nomoreparties.site](https://around-the-us.students.nomoreparties.site)<br />
 [www.around-the-us.students.nomoreparties.site](https://www.around-the-us.students.nomoreparties.site)
-
----
+<br><br>
 
 ## Application Features
 
